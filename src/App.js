@@ -9,8 +9,10 @@ export default function App() {
   return (
     <div className="App">
       <Router>
+        <Header />
+        <ProductListing />
+        <ProductDetail />
         <Routes>
-          <Header />
           <Route path="/" element={<ProductListing />} />
           <Route path="/product/:productId" element={<ProductDetail />} />
         </Routes>
