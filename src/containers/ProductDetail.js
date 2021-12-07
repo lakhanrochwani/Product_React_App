@@ -17,8 +17,8 @@ const ProductDetail = () => {
   };
 
   useEffect(() => {
-    fetchProductDetail();
-  }, []);
+    if (productId && productId !== '') fetchProductDetail();
+  }, [productId]);
   return (
     <div>
       <h1>ProductDetail</h1>
