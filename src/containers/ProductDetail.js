@@ -6,7 +6,7 @@ import { selectedProduct } from '../redux/actions/productActions';
 
 const ProductDetail = () => {
   const product = useSelector((state) => state.product);
-  const {image, title, price, description, category} = product;
+  const { image, title, price, description, category } = product;
   const { productId } = useParams();
   const dispatch = useDispatch();
   const fetchProductDetail = async () => {
@@ -51,7 +51,6 @@ const ProductDetail = () => {
         </div>
       )}
     </div>
-  );
   );
 };
 
