@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  selectedProduct,
+  fetchProduct,
   removeSelectedProduct,
 } from '../redux/actions/productActions';
 
@@ -12,19 +12,19 @@ const ProductDetail = () => {
   const { image, title, price, description, category } = product;
   const { productId } = useParams();
   const dispatch = useDispatch();
-  const fetchProductDetail = async () => {
-    const response = await axios
-      .get(`https://fakestoreapi.com/products/${productId}`)
-      .catch((err) => console.log(Error(err)));
-    console.log(response.data);
-    dispatch(selectedProduct(response.data));
-  };
+  // const fetchProductDetail = async () => {
+  //   const response = await axios
+  //     .get(`https://fakestoreapi.com/products/${productId}`)
+  //     .catch((err) => console.log(Error(err)));
+  //   console.log(response.data);
+  //   dispatch(selectedProduct(response.data));
+  // };
 
   useEffect(() => {
-    if (productId && productId !== '') fetchProductDetail();
+    if (productId && productId !== '') dispatch(fetchProduct(productId));
     return () => {
-      dispatch(removeSelectedProduct())
-    }
+      dispatch(removeSelectedProduct());
+    };
   }, [productId]);
   return (
     <div className="ui grid container">
