@@ -9,8 +9,8 @@ export const fetchProducts = () => async (dispatch) => {
   });
 };
 
-export const fetchProduct = (productId) => async (dispatch) => {
-  const product = await storeApi.get(`/products/${productId}`);
+export const fetchProduct = (id) => async (dispatch) => {
+  const product = await storeApi.get(`/products/${id}`);
   dispatch({
     type: ActionTypes.FETCH_PRODUCT,
     payload: product.data,
