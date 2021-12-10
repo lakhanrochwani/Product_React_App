@@ -12,7 +12,7 @@ export const fetchProducts = () => async (dispatch) => {
 export const fetchProduct = (id) => async (dispatch) => {
   const product = await storeApi.get(`/products/${id}`);
   dispatch({
-    type: ActionTypes.FETCH_PRODUCT,
+    type: ActionTypes.SELECTED_PRODUCT,
     payload: product.data,
   });
 };
