@@ -10,7 +10,7 @@ const Header = () => {
         </Link>
         <Link to="/cart">
           <i
-            class="shopping cart icon"
+            className="shopping cart icon"
             style={{ fontSize: '24px', position: 'absolute', right: '479px' }}
           ></i>
         </Link>

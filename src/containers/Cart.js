@@ -1,12 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const Cart = ({ products }) => {
-  const [price,setPrice] = useState();
-  const [quantity, setQuantity] = useState(1);
-  const renderCart = products.map((product) => {
-    const { title, image, price, category } = product;
+const Cart = ({ products,removeItem }) => {
+  const [cartItems, setCartItems] = useState(products);
+
+  const removeAll = () => {
+    setCartItems([]);
+  };
+  console.log('CART ITEMS', cartItems);
+
+  const renderCart = cartItems.map((item) => {
+    const { title, image, price, category, quantity, id } = item;
+    const [count, setCount] = useState(quantity);
+    const [amount, setAmount] = useState(quantity * price);
+    // const removeItem = () => {
+    //   let updatedItems = cartItems.filter((item) => item.id !== id);
+    //   setCartItems(updatedItems);
+    // };
+
+    useEffect(() => {
+      setAmount(count * price);
+    }, [count]);
+
     return (
-      <div className="cart-items">
+      <div key={id} className="cart-items">
         <div className="image-box">
           <img src={image} style={{ height: '120px' }} />
         </div>
@@ -15,17 +31,24 @@ const Cart = ({ products }) => {
           <h3 className="subtitle">{category}</h3>
         </div>
         <div className="counter">
-          <div className="btn" onClick={}>+</div>
-          <div className="count">1</div>
-          <div className="btn" onClick={}>-</div>
+          <div className="btn" onClick={() => setCount(count + 1)}>
+            +
+          </div>
+          <div className="count">{count}</div>
+          <div
+            className="btn"
+            onClick={() => (count > 1 ? setCount(count - 1) : setCount(1))}
+          >
+            -
+          </div>
         </div>
         <div className="prices">
-          <div className="amount">${price}</div>
+          <div className="amount">${amount}</div>
           <div className="save">
             <u>Save for later</u>
           </div>
           <div className="remove">
-            <u>Remove</u>
+            <u onClick={removeItem}>Remove</u>
           </div>
         </div>
       </div>
@@ -37,14 +60,18 @@ const Cart = ({ products }) => {
       <div className="cart-container">
         <div className="header">
           <h3 className="heading">Shopping Cart</h3>
-          <h5 className="action">Remove All</h5>
+          <h5 className="action" onClick={removeAll}>
+            Remove All
+          </h5>
         </div>
         {renderCart}
         <hr />
         <div className="checkout">
           <div className="total">
             <div>
-              <div className="subtotal">Sub-Total (2 items) : </div>
+              <div className="subtotal">
+                Sub-Total ({cartItems.length} items) :{' '}
+              </div>
             </div>
             <div className="total-amount">$6.18</div>
           </div>
