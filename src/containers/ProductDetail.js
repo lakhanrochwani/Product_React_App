@@ -6,7 +6,7 @@ import {
   removeSelectedProduct,
 } from '../redux/actions/productActions';
 
-const ProductDetail = () => {
+const ProductDetail = ({ addToCart }) => {
   const product = useSelector((state) => state.product);
   const { image, title, price, description, category } = product;
   const { productId } = useParams();
@@ -25,6 +25,7 @@ const ProductDetail = () => {
       dispatch(removeSelectedProduct());
     };
   }, [productId]);
+
   return (
     <div className="ui grid container">
       {Object.keys(product).length === 0 ? (
@@ -45,7 +46,12 @@ const ProductDetail = () => {
                 <h3 className="ui brown block header">{category}</h3>
                 <p>{description}</p>
                 <div className="ui vertical animated button" tabIndex="0">
-                  <div className="hidden content">
+                  <div
+                    className="hidden content"
+                    onClick={() => {
+                      addToCart(product);
+                    }}
+                  >
                     <i className="shop icon"></i>
                   </div>
                   <div className="visible content">Add to Cart</div>
