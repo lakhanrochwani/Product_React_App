@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react';
 
-const Cart = ({ products,removeItem }) => {
+const Cart = ({ products, removeItem }) => {
   const [cartItems, setCartItems] = useState(products);
+  let sum = cartItems.reduce((prev, curr) => curr.price + prev, 0);
+  console.log('SUM:', sum);
+
+  const [total, setTotal] = useState(sum);
 
   const removeAll = () => {
-    setCartItems([]);
+    if (cartItems.length > 0) {
+      setCartItems([]);
+    } else {
+      alert('No products in the cart!');
+    }
   };
-  console.log('CART ITEMS', cartItems);
 
   const renderCart = cartItems.map((item) => {
     const { title, image, price, category, quantity, id } = item;
     const [count, setCount] = useState(quantity);
     const [amount, setAmount] = useState(quantity * price);
-    // const removeItem = () => {
-    //   let updatedItems = cartItems.filter((item) => item.id !== id);
-    //   setCartItems(updatedItems);
-    // };
 
     useEffect(() => {
       setAmount(count * price);
@@ -48,7 +51,13 @@ const Cart = ({ products,removeItem }) => {
             <u>Save for later</u>
           </div>
           <div className="remove">
-            <u onClick={removeItem}>Remove</u>
+            <u
+              onClick={() => {
+                removeItem(id);
+              }}
+            >
+              Remove
+            </u>
           </div>
         </div>
       </div>
@@ -73,7 +82,7 @@ const Cart = ({ products,removeItem }) => {
                 Sub-Total ({cartItems.length} items) :{' '}
               </div>
             </div>
-            <div className="total-amount">$6.18</div>
+            <div className="total-amount">${total}</div>
           </div>
           <button className="button">Checkout</button>
         </div>

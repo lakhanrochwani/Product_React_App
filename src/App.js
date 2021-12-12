@@ -70,9 +70,14 @@ export default function App() {
       setShoppingCart([...shoppingCart, { ...newProduct, quantity: 1 }]);
     }
   };
+
+  const removeItem = (productId) => {
+    let updatedItems = shoppingCart.filter((item) => item.id !== productId);
+    setShoppingCart(updatedItems);
+  };
+
   return (
     <div className="App">
-      {console.log('Cart:', shoppingCart)}
       <Router>
         <Header />
         <Routes>
@@ -81,7 +86,10 @@ export default function App() {
             path="/product/:productId"
             element={<ProductDetail addToCart={addToCart} />}
           />
-          <Route path="/cart" element={<Cart products={shoppingCart} removeItem={removeItem} />} />
+          <Route
+            path="/cart"
+            element={<Cart products={shoppingCart} removeItem={removeItem} />}
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
